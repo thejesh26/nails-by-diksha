@@ -23,25 +23,18 @@ body {
   font-family: var(--font-inter), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-/* Tighter serif headings */
-.font-serif {
-  letter-spacing: -0.025em;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 5px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #F5EFE6;
 }
 ::-webkit-scrollbar-thumb {
-  background: #D4B896;
-  border-radius: 2px;
+  background: #CEC0AF;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #8B6552;
@@ -53,6 +46,14 @@ body {
   color: #2C1810;
 }
 
+/* Section divider */
+.section-divider {
+  width: 40px;
+  height: 1px;
+  background: #8B6552;
+  margin: 0 auto;
+}
+
 /* Input styles */
 input, select, textarea {
   outline: none;
@@ -61,21 +62,4 @@ input, select, textarea {
 /* Smooth image loading */
 img {
   transition: opacity 0.3s ease;
-}
-
-/* Fine rule */
-.rule {
-  width: 32px;
-  height: 1px;
-  background: #8B6552;
-}
-
-/* Editorial number */
-.editorial-num {
-  font-family: var(--font-cormorant);
-  font-size: clamp(3.5rem, 6vw, 5rem);
-  font-weight: 300;
-  color: #E0D5C8;
-  line-height: 1;
-  letter-spacing: -0.04em;
 }

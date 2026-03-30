@@ -16,7 +16,7 @@ export default function Navigation() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
@@ -30,65 +30,63 @@ export default function Navigation() {
   return (
     <>
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
+        initial={{ y: -60, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-[#F5EFE6]/96 backdrop-blur-md border-b border-[#E8E0D6]'
+            ? 'bg-[#F5EFE6]/95 backdrop-blur-sm border-b border-[#E0D5C8] shadow-sm'
             : 'bg-transparent'
         }`}
       >
-        <nav className="max-w-7xl mx-auto px-8 lg:px-14 h-[72px] flex items-center justify-between">
+        <nav className="max-w-7xl mx-auto px-6 lg:px-12 h-16 flex items-center justify-between">
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="font-serif text-[17px] font-light tracking-[0.12em] text-[#2C1810] hover:text-[#8B6552] transition-colors duration-400"
+            className="font-serif text-xl font-light tracking-widest text-[#2C1810] hover:text-[#8B6552] transition-colors duration-300"
           >
             Nails By Diksha
           </button>
 
           {/* Desktop Links */}
-          <ul className="hidden md:flex items-center gap-10">
+          <ul className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <button
                   onClick={() => handleNav(link.href)}
-                  className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#6B4C3B]/70 hover:text-[#2C1810] transition-colors duration-200"
+                  className="font-sans text-xs tracking-[0.15em] uppercase text-[#6B4C3B] hover:text-[#2C1810] transition-colors duration-200"
                 >
                   {link.label}
                 </button>
               </li>
             ))}
+            <li>
+              <button
+                onClick={() => handleNav('#booking')}
+                className="font-sans text-xs tracking-[0.15em] uppercase px-5 py-2.5 border border-[#2C1810] text-[#2C1810] hover:bg-[#2C1810] hover:text-[#F5EFE6] transition-all duration-300 rounded-full"
+              >
+                Book Now
+              </button>
+            </li>
           </ul>
 
-          {/* Book CTA — text only, underline style */}
-          <div className="hidden md:block">
-            <button
-              onClick={() => handleNav('#booking')}
-              className="font-sans text-[11px] tracking-[0.18em] uppercase text-[#2C1810] underline underline-offset-[5px] decoration-[#CEC0AF] hover:decoration-[#2C1810] transition-all duration-300"
-            >
-              Book Now
-            </button>
-          </div>
-
-          {/* Mobile toggle */}
+          {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden w-8 h-8 flex flex-col items-end justify-center gap-[7px]"
+            className="md:hidden flex flex-col gap-1.5 p-2"
             aria-label="Toggle menu"
           >
             <motion.span
-              animate={menuOpen ? { rotate: 45, y: 6, width: '100%' } : { rotate: 0, y: 0, width: '100%' }}
-              className="h-px bg-[#2C1810] block w-full origin-center"
+              animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+              className="w-6 h-px bg-[#2C1810] block origin-center transition-all"
             />
             <motion.span
-              animate={menuOpen ? { opacity: 0, x: 8 } : { opacity: 1, x: 0 }}
-              className="h-px bg-[#2C1810] block w-3/4"
+              animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
+              className="w-6 h-px bg-[#2C1810] block"
             />
             <motion.span
-              animate={menuOpen ? { rotate: -45, y: -6, width: '100%' } : { rotate: 0, y: 0, width: '50%' }}
-              className="h-px bg-[#2C1810] block w-1/2 origin-center"
+              animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+              className="w-6 h-px bg-[#2C1810] block origin-center transition-all"
             />
           </button>
         </nav>
@@ -98,51 +96,33 @@ export default function Navigation() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#F5EFE6] flex flex-col md:hidden"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-40 bg-[#F5EFE6] flex flex-col items-center justify-center gap-8 md:hidden"
           >
-            {/* Top bar */}
-            <div className="px-8 h-[72px] flex items-center justify-between border-b border-[#E8E0D6]">
-              <span className="font-serif text-[17px] font-light tracking-[0.12em] text-[#2C1810]">
-                Nails By Diksha
-              </span>
-              <button onClick={() => setMenuOpen(false)} className="w-8 h-8 flex items-center justify-center">
-                <svg className="w-4 h-4 text-[#2C1810]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-
-            {/* Links */}
-            <div className="flex-1 flex flex-col justify-center px-10">
-              {navLinks.map((link, i) => (
-                <motion.button
-                  key={link.href}
-                  initial={{ opacity: 0, x: -16 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.06, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  onClick={() => handleNav(link.href)}
-                  className="text-left font-serif text-[clamp(2.2rem,7vw,3.5rem)] font-light leading-[1.1] text-[#2C1810] hover:text-[#8B6552] transition-colors duration-200 py-2 border-b border-[#E8E0D6] last:border-0"
-                >
-                  {link.label}
-                </motion.button>
-              ))}
-            </div>
-
-            <div className="px-10 pb-12">
+            {navLinks.map((link, i) => (
               <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.4 }}
-                onClick={() => handleNav('#booking')}
-                className="font-sans text-xs tracking-[0.2em] uppercase text-[#8B6552]"
+                key={link.href}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07 }}
+                onClick={() => handleNav(link.href)}
+                className="font-serif text-3xl font-light text-[#2C1810] hover:text-[#8B6552] transition-colors"
               >
-                Book an Appointment →
+                {link.label}
               </motion.button>
-            </div>
+            ))}
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.07 }}
+              onClick={() => handleNav('#booking')}
+              className="mt-4 font-sans text-sm tracking-[0.15em] uppercase px-8 py-3 border border-[#2C1810] text-[#2C1810] hover:bg-[#2C1810] hover:text-[#F5EFE6] transition-all duration-300 rounded-full"
+            >
+              Book Now
+            </motion.button>
           </motion.div>
         )}
       </AnimatePresence>
